@@ -1,0 +1,56 @@
+# ======= NODES
+MATCH (n) DETACH DELETE n
+# eu e esposa
+CREATE
+(:Pessoa:Trabalhador:Estudante{nome:'Lucas Ribeiro',sexo:'Masculino',idade:30}),
+(:Pessoa:Trabalhador:Estudante{nome:'Tamires Pereira',sexo:'Feminino',idade:25}),
+(:Pessoa:Trabalhador{nome:'Margarete Ribeiro',sexo:'Faminino',idade:49}),
+(:Pessoa:Aposentado{nome:'Rubens Sergio',sexo:'Masculino',idade:54}),
+(:Pessoa:Falecido{nome:'Hilton Garcia',sexo:'Faminino',idade:64}),
+(:Pessoa:Falecido{nome:'Ilma Sales',sexo:'Masculino',idade:74}),
+(:Pessoa:Aposentado{nome:'Margarida Ribeiro',sexo:'Faminino',idade:56}),
+(:Pessoa:Falecido{nome:'João Filho',sexo:'Masculino',idade:78}),
+(:Pessoa:Trabalhador{nome:'Marcia Ribeiro',sexo:'Faminino',idade:42}),
+(:Pessoa:Trabalhador{nome:'Marly Ribeiro',sexo:'Faminino',idade:55}),
+(:Pet:Gato{nome:'Frajola',sexo:'Masculino',idade:4}),
+(:Pet:Gato{nome:'Joline',sexo:'Feminino',idade:4}),
+(:Pet:Gato{nome:'Pixuleko',sexo:'Masculino',idade:2})
+# ======== RELATIONS
+MATCH
+    (lr:Pessoa{nome:'Lucas Ribeiro'}),
+    (tp:Pessoa{nome:'Tamires Pereira'}),
+    (margareter:Pessoa{nome:'Margarete Ribeiro'}),
+    (rs:Pessoa{nome:'Rubens Sergio'}),
+	(margaridar:Pessoa{nome:'Margarida Ribeiro'}),
+	(jf:Pessoa{nome:'João Filho'}),
+	(hg:Pessoa{nome:'Hilton Garcia'}),
+	(isales:Pessoa{nome:'Ilma Sales'}),
+	(marciar:Pessoa{nome:'Marcia Ribeiro'}),
+	(marlyr:Pessoa{nome:'Marly Ribeiro'}),
+	(p:Pet{nome:'Pixuleko'}),
+	(f:Pet{nome:'Frajola'}),
+	(j:Pet{nome:'Joline'})
+CREATE
+    (lr)-[:FILHO_DE]->(margareter),
+    (lr)-[:FILHO_DE]->(rs),
+    (lr)-[:CASADO_COM{desde:2019}]->(tp),
+    (lr)-[:DONO_DE{desde:2020}]->(p),
+    (lr)-[:DONO_DE{desde:2019}]->(f),
+    (lr)-[:DONO_DE{desde:2019}]->(j),
+    (lr)-[:NETO_DE]->(jf),
+    (lr)-[:NETO_DE]->(margaridar),
+    (lr)-[:NETO_DE]->(hg),
+    (lr)-[:NETO_DE]->(isales),
+    (f)-[:IRMAO_DE]->(j),
+    (margareter)-[:FILHO_DE]->(margaridar),
+    (margareter)-[:FILHO_DE]->(jf),
+    (marciar)-[:FILHO_DE]->(margaridar),
+    (marciar)-[:FILHO_DE]->(jf),
+    (marlyr)-[:FILHO_DE]->(margaridar),
+    (marlyr)-[:FILHO_DE]->(jf),
+    (margareter)-[:IRMAO_DE]->(marciar),
+    (margareter)-[:IRMAO_DE]->(marlyr),
+    (rs)-[:FILHO_DE]->(isales),
+    (rs)-[:FILHO_DE]->(hg),
+    (rs)-[:SOGRO_DE]->(tp),
+    (margareter)-[:SOGRO_DE]->(tp)
